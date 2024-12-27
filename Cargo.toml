@@ -1,0 +1,9 @@
+[package]
+name = "lc3-vm"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+enum-primitive-derive = "0.3.0"
+num-traits = "0.2.19"
+termios = "0.3.3"
