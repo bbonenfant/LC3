@@ -124,7 +124,7 @@ impl VM {
     pub fn run(&mut self) {
         while !self.halted {
             match self.step() {
-                STATUS::Halted => {self.halted = false;},
+                STATUS::Halted => {self.halted = true;},
                 _ => {}
             }
         }
