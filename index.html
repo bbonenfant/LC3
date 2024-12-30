@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>LC-3 VM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.css" />
+  <style>
+      #terminal {
+          height: 450px;
+          width: 550px;
+          margin: auto;
+
+          &.halted {
+              opacity: 0.8;
+          }
+      }
+
+      .xterm {
+          border: 1px black solid;
+          border-radius: 5px;
+          padding: 0.75rem;
+      }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/addons/fit/fit.min.js"></script>
+  <script type="module">
+      // Use ES module import syntax to import functionality from the WASM module.
+      import init, {VM} from './pkg/lc3.js';
+
+      await init();
+
+      let element = document.getElementById('terminal');
+      window.vm = new VM();
+      window.schedule = () => {
+          if (!window.vm.halted) {
+              element.classList.remove("halted");
+              // run_wasm will continue to run the LC-3 program until
+              // either the program requires user input, the program
+              // halts, or the program errors.
+              if (window.vm.run_wasm()) {
+                  // The program requires user input, but it is non-blocking.
+                  // We should schedule the VM to start running again.
+                  console.log("soft VM interrupt");
+                  window.requestAnimationFrame(window.schedule);
+              } else {
+                  // Either the program halted, errored, or is blocking for
+                  // user input. We don't schedule the VM to start again.
+                  // The function which handles user input will reschedule.
+                  console.log("hard VM interrupt");
+              }
+              if (vm.halted) element.classList.add("halted");
+          }
+      }
+      window.schedule();
+  </script>
+</body>
+</html>

@@ -3,7 +3,16 @@ name = "lc3"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+
 [dependencies]
 enum-primitive-derive = "0.3.0"
 num-traits = "0.2.19"
+
+[target.'cfg(target_family = "unix")'.dependencies]
 termios = "0.3.3"
+
+[target.'cfg(target_family = "wasm")'.dependencies]
+wasm-bindgen = "0.2.99"
