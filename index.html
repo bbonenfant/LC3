@@ -6,6 +6,10 @@
   <title>LC-3 VM</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.css" />
   <style>
+      #main {
+          width: 600px;
+          margin: auto;
+      }
       #terminal {
           height: 450px;
           width: 550px;
@@ -24,7 +28,35 @@
   </style>
 </head>
 <body>
-  <div id="terminal"></div>
+  <div id="main">
+    <h1>LC-3 VM (Rust/WASM)</h1>
+    <p>
+      This is an LC-3 virtual machine following
+      <a href="https://www.jmeiners.com/lc3-vm/">this tutorial</a>
+      . I adapted the tutorial to code this in Rust, and then I decided to see if
+      I could compile it to WASM and get it running in the browser.
+    </p>
+    <p>
+      The VM runs a simple Hello World program when the webpage loads, but you
+      can drag and drop compiled LC-3 image files (.obj) and the VM will run them.
+      Example programs are
+      <a href="https://www.jmeiners.com/lc3-vm/supplies/2048.obj">2048</a>
+      (written by rpendleton) and
+      <a href="https://www.jmeiners.com/lc3-vm/supplies/rogue.obj">Rogue</a>
+      (written by jmeiners).
+    </p>
+    <div id="terminal"></div>
+    <h3>Other Stuff</h3>
+    <p>The terminal emulator is from <a href="https://xtermjs.org/">Xterm.js</a>.</p>
+    <p>My source code can be found <a href="https://github.com/bbonenfant">here</a>.</p>
+    <p>
+      I'd like to come back to this and try my hand at writing non-trivial assembly
+      programs, or maybe even a debugger for the VM. But I spent more time than I
+      anticipated playing with this. Getting something to run in two very different
+      environments really helps one to appreciate its finer details.
+    </p>
+  </div>
+  <!-----scripts----->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/addons/fit/fit.min.js"></script>
   <script type="module">
